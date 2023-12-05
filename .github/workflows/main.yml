@@ -1,0 +1,50 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main  # Change this to match your main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can choose the operating system here
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Clones the project repository
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # You can change the Node.js version here
+
+    - name: Install dependencies
+      run: npm install  # Installs Node.js dependencies
+
+    - name: Build project
+      run: npm run build  # Executes the build script defined in package.json
+
+    - name: Run unit tests
+      run: npm test  # Executes the unit tests using the command specified in package.json
+
+  manual_trigger:
+    runs-on: ubuntu-latest  # You can choose the operating system here
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Clones the project repository
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # You can change the Node.js version here
+
+    - name: Install dependencies
+      run: npm install  # Installs Node.js dependencies
+
+    - name: Build project
+      run: npm run build  # Executes the build script defined in package.json
+
+    - name: Run unit tests
+      run: npm test  # Executes the unit tests using the command specified in package.json
